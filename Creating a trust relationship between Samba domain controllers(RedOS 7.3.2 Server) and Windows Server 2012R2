@@ -360,8 +360,8 @@ CIR.RU = {
 	default_domain = cir.ru
 }
 DOMENOK.RU = {
-	kdc = dcd.domenok.ru
-	admin_server = dcd.domenok.ru
+	kdc = dc.domenok.ru
+	admin_server = dc.domenok.ru
 }
 
 [domain_realm]
@@ -389,6 +389,96 @@ Valid starting		Expires			Service principal
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 samba-tool domain trust create domenok.ru -U Администратор@domenok.ru |#|#| Команда для настройки доверительных отношений между контроллерами домена
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Если после введения пароля все прошло успешно, то вывод будет таким:
+------------
+GENSEC backend 'gssapi_spnego' registered
+GENSEC backend 'gssapi_krb5' registered
+GENSEC backend 'gssapi_krb5_sasl' registered
+GENSEC backend 'spnego' registered
+GENSEC backend 'schannel' registered
+GENSEC backend 'naclrpc_as_system' registered
+GENSEC backend 'sasl-EXTERNAL' registered
+GENSEC backend 'ntlmssp' registered
+GENSEC backend 'ntlmssp_resume_ccache' registered
+GENSEC backend 'http_basic' registered
+GENSEC backend 'http_ntlm' registered
+GENSEC backend 'http_negotiate' registered
+GENSEC backend 'krb5' registered
+GENSEC backend 'fake_gssapi_krb5' registered
+Using binding ncalrpc:DCC[,auth_type=ncalrpc_as_system]
+LocalDomain Netbios[CIR] DNS[cir.ru] SID[S-1-5-21-25273870-955602320-113037211]
+resolve_lmhosts: Attempting lmhosts lookup for name _ldap._tcp.DOMENOK.RU<0x0>
+RemoteDC Netbios[DCD] DNS[dcd.domenok.ru] ServerType[PDC,GC,LDAP,DS,KDC,TIMESERV,CLOSEST,WRITABLE,GOOD_TIMESERV,FULL_SECRET_DOMAIN_6,ADS_WEB_SERVICE,DS_8,__unknown_00008000__]
+Using binding ncacn_np:dcd.domenok.ru
+resolve_lmhosts: Attempting lmhosts lookup for name dcd.domenok.ru<0x20>
+Password for [Администратор@DOMENOK.RU]:
+Cannot reach a KDC we require to contact (null) : kinit for Администратор@DOMENOK.RU failed (Cannot contact any KDC for requested realm)
+
+gensec_spnego_client_negTokenInit_step: gssapi_krb5: creating NEG_TOKEN_INIT for cifs/dcd.domenok.ru failed (next[ntlmssp]): NT_STATUS_NO_LOGON_SERVERS
+Got challenge flags:
+Got NTLMSSP neg_flags=0x62898215
+NTLMSSP: Set final flags:
+Got NTLMSSP neg_flags=0x62088215
+NTLMSSP Sign/Seal - Initialising with flags:
+Got NTLMSSP neg_flags=0x62088215
+NTLMSSP Sign/Seal - Initialising with flags:
+Got NTLMSSP neg_flags=0x62088215
+RemoteDomain Netbios[DOMENOK] DNS[domenok.ru] SID[S-1-5-21-615651707-2160561468-1044660757]
+Using binding ncalrpc:DCC[,auth_type=ncalrpc_as_system]
+Using binding ncacn_np:dcd.domenok.ru
+resolve_lmhosts: Attempting lmhosts lookup for name dcd.domenok.ru<0x20>
+Cannot reach a KDC we require to contact (null) : kinit for Администратор@DOMENOK.RU failed (Cannot contact any KDC for requested realm)
+
+gensec_spnego_client_negTokenInit_step: gssapi_krb5: creating NEG_TOKEN_INIT for cifs/dcd.domenok.ru failed (next[ntlmssp]): NT_STATUS_NO_LOGON_SERVERS
+Got challenge flags:
+Got NTLMSSP neg_flags=0x62898215
+NTLMSSP: Set final flags:
+Got NTLMSSP neg_flags=0x62088215
+NTLMSSP Sign/Seal - Initialising with flags:
+Got NTLMSSP neg_flags=0x62088215
+NTLMSSP Sign/Seal - Initialising with flags:
+Got NTLMSSP neg_flags=0x62088215
+Creating remote TDO.
+Remote TDO created.
+Setting supported encryption types on remote TDO.
+Creating local TDO.
+Local TDO created
+Setting supported encryption types on local TDO.
+Validating outgoing trust...
+OK: LocalValidation: DC[\\dcd.domenok.ru] CONNECTION[WERR_OK] TRUST[WERR_OK] VERIFY_STATUS_RETURNED
+Validating incoming trust...
+OK: RemoteValidation: DC[\\dcc.cir.ru] CONNECTION[WERR_OK] TRUST[WERR_OK] VERIFY_STATUS_RETURNED
+Success.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 samba-tool domain trust show domenok.ru |#|#| Команда для проверки установленных доверительных отношений между КД
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Вывод команды должен быть таким:
+------------
+GENSEC backend 'gssapi_spnego' registered
+GENSEC backend 'gssapi_krb5' registered
+GENSEC backend 'gssapi_krb5_sasl' registered
+GENSEC backend 'spnego' registered
+GENSEC backend 'schannel' registered
+GENSEC backend 'naclrpc_as_system' registered
+GENSEC backend 'sasl-EXTERNAL' registered
+GENSEC backend 'ntlmssp' registered
+GENSEC backend 'ntlmssp_resume_ccache' registered
+GENSEC backend 'http_basic' registered
+GENSEC backend 'http_ntlm' registered
+GENSEC backend 'http_negotiate' registered
+GENSEC backend 'krb5' registered
+GENSEC backend 'fake_gssapi_krb5' registered
+Using binding ncalrpc:DCC[,auth_type=ncalrpc_as_system]
+LocalDomain Netbios[CIR] DNS[cir.ru] SID[S-1-5-21-25273870-955602320-113037211]
+TrustedDomain:
+
+NetbiosName:    DOMENOK
+DnsName:        domenok.ru
+SID:            S-1-5-21-615651707-2160561468-1044660757
+Type:           0x2 (UPLEVEL)
+Direction:      0x3 (BOTH)
+Attributes:     0x4 (QUARANTINED_DOMAIN)
+PosixOffset:    0x00000000 (0)
+kerb_EncTypes:  0x18 (AES128_CTS_HMAC_SHA1_96,AES256_CTS_HMAC_SHA1_96)
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 На этом инструкция закончена! Спасибо за внимание!
