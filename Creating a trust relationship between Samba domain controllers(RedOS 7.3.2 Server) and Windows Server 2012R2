@@ -166,27 +166,45 @@ INFO 2023-02-03 12:55:54,024 pid:4043 /usr/lib64/python3.8/site-packages/samba/p
 nano /etc/samba/smb.conf |#|#| В файле smb.conf, раздел [global] нужно привести к следующему виду:
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 [global]
-log level = 3
-dns forwarder = 10.10.10.111
-netbios name = DCC
-realm= CIR.RU
-server role = active directory domain controller
-workgroup= CIR
-idmap_ldb:use rfc2307 = yes
-vfs objects = dfs_samba4 acl_xattr
-map acl inherit = yes
-store dos attributes = yes
-allow dns updates = nonsecure
-nsupdate command = /usr/bin/nsupdate -g
-dsdb:schema update allowed = true
-
-[netlogon]
-path = /var/lib/samba/sysvol/cir.ru/scripts
-read only = No 
+        log level = 3
+        dns forwarder = 10.10.10.111
+        netbios name = DCC
+        realm= CIR.RU
+        server role = active directory domain controller
+        workgroup= CIR
+        idmap_ldb:use rfc2307 = yes
+        vfs objects = dfs_samba4 acl_xattr
+        map acl inherit = yes
+        store dos attributes = yes
+        allow dns updates = nonsecure
+        nsupdate command = /usr/bin/nsupdate -g
+        dsdb:schema update allowed = true
+        security = user
+        map to guest = bad user
+        wins support = no
+        dns proxy = no
 
 [sysvol]
-path = /var/lib/samba/sysvol
-read only = No
+        path = /var/lib/samba/sysvol
+        read only = No
+
+[netlogon]
+	path = /var/lib/samba/sysvol/cir.ru/scripts
+        read only = No
+
+[public]
+        path = /samba/public
+        guest ok = yes
+        force user = nobody
+        browsable = yes
+        writable = yes
+
+[private]
+	path = /samba/private
+        valid users = @smbgrp
+        guest ok = no
+        browsable = yes
+        writable = yes
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 testparm |#|#| Команда для проверки работоспособности файла "smb.conf" в каталоге "/etc/samba/"
 При хорошем раскладе вывод должен быть таким: 
