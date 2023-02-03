@@ -17,7 +17,7 @@
 Адресация уже настроенной ВМ с ОС Windows Server 2012R2
 Hostname: dc2.domenok.ru
 IP-address: 10.10.10.222
-Mask:255.255.255.0
+Mask: 255.255.255.0
 Gateway: 10.10.10.253
 DNS: 127.0.0.1
 DNS: 10.10.10.111
